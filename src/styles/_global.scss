@@ -1075,9 +1075,9 @@ body { background: var(--autolar-canvas); }
 .tracker-live-badge.offline { color: #667269 !important; background-color: #f0f3ee !important; border-color: #e5eae2; }
 .weather-summary-card .card-body { justify-content: flex-start; align-content: center; }
 .weather-data-grid { margin-top: .15rem; }
-.dashboard-metrics-row > [class*="col"] { display: flex; }
-.dashboard-metrics-row > [class*="col"] > .card { width: 100%; }
-.dashboard-metrics-row .ldr-sensor-card .card-body { min-height: 150px; display: flex; flex-direction: column; justify-content: center; }
+.dashboard-metrics-row > [class*="col"] { display: flex; min-width: 0; }
+.dashboard-metrics-row > [class*="col"] > .card { width: 100%; min-width: 0; }
+.dashboard-metrics-row .ldr-sensor-card .card-body { min-height: 0; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
 .chart-card .chart-body { display: grid; place-items: center; }
 
 // Keep the monitoring icons round and the top controls grouped and compact.
