@@ -1,0 +1,12 @@
+// Mixins for reusable styles
+// You can define your mixins here
+
+// Example mixin for border-radius
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+// Example mixin for box-shadow
+@mixin box-shadow($shadow) {
+  box-shadow: $shadow;
+}

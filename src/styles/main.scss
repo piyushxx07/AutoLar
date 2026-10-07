@@ -1,0 +1,23 @@
+// main.scss
+// Main stylesheet
+
+@use './variables' as *;
+@use './mixins' as *;
+@use './global' as *;
+@use './responsive' as *;
+
+// Additional global styles can be added here
+
+// Example: custom scrollbar
+/* 
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: $background-color-light;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $secondary-color;
+  border-radius: $border-radius;
+}
+*/

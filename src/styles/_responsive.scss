@@ -1,0 +1,56 @@
+// _responsive.scss
+// Responsive breakpoints and media queries
+
+$breakpoint-sm: 640px;   // mobile
+$breakpoint-md: 768px;   // tablet
+$breakpoint-lg: 1024px;  // small desktop
+$breakpoint-xl: 1280px;  // desktop
+
+@mixin respond-sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin respond-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin respond-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin respond-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// For max-width (mobile-first)
+@mixin respond-sm-max {
+  @media (max-width: $breakpoint-sm - 1px) {
+    @content;
+  }
+}
+
+@mixin respond-md-max {
+  @media (max-width: $breakpoint-md - 1px) {
+    @content;
+  }
+}
+
+@mixin respond-lg-max {
+  @media (max-width: $breakpoint-lg - 1px) {
+    @content;
+  }
+}
+
+@mixin respond-xl-max {
+  @media (max-width: $breakpoint-xl - 1px) {
+    @content;
+  }
+}

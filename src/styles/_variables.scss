@@ -1,0 +1,51 @@
+// _variables.scss
+// Premium Light Solar IoT Theme
+
+// AutoLar Color System
+$autolar-navy: #0f172a;       // Deep navy for primary headings and text
+$autolar-blue: #2563eb;       // Primary blue for active states and primary buttons
+$autolar-sky: #e0f2fe;        // Very light sky blue for soft backgrounds
+$autolar-sky-accent: #38bdf8; // Sky blue for icons and charts
+$autolar-green: #10b981;      // Soft green for online/success/efficiency
+$autolar-solar: #f59e0b;      // Yellow/orange for solar/energy/warnings
+$autolar-purple: #8b5cf6;     // Subtle purple for AI/weather
+$autolar-gray: #64748b;       // Muted gray for secondary text
+$autolar-error: #ef4444;      // Red for errors
+$autolar-border: #e2e8f0;     // Soft borders
+
+// Backgrounds
+$autolar-background: #f8fafc; // Off-white/slate base
+$autolar-card-bg: #ffffff;    // Pure white cards
+$autolar-header-bg: rgba(255, 255, 255, 0.9); // Semi-transparent white for header
+$autolar-sidebar-bg: #ffffff; // White sidebar
+
+// Shadows & Depth
+$shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.05);
+$shadow-hover: 0 10px 25px rgba(15, 23, 42, 0.08);
+$shadow-3d: 0 2px 5px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(15, 23, 42, 0.02);
+
+// Radius
+$border-radius: 12px;
+$border-radius-sm: 8px;
+$border-radius-lg: 20px;
+$border-radius-xl: 24px;
+
+// Fonts
+$font-family-base: 'Inter', system-ui, sans-serif;
+$font-family-heading: 'Outfit', system-ui, sans-serif;
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Transitions
+$transition-fast: 0.2s ease-out;
+$transition-normal: 0.3s ease-out;

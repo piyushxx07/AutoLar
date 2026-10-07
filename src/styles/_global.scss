@@ -1,0 +1,1311 @@
+@use 'sass:color';
+@use './variables' as *;
+
+// _global.scss // Global styles and reset
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: $font-family-base;
+  background-color: $autolar-background;
+  // Very soft blue background gradients as requested
+  background-image: 
+    radial-gradient(circle at 0% 0%, rgba(224, 242, 254, 0.3) 0%, transparent 40%),
+    radial-gradient(circle at 100% 100%, rgba(243, 244, 246, 0.3) 0%, transparent 40%);
+  background-attachment: fixed;
+  color: $autolar-navy;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+// App Layout (Desktop/Laptop First)
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  overflow-y: auto;
+  padding: 2rem;
+  background: transparent;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $spacing-sm;
+  font-weight: 600;
+  font-family: $font-family-heading;
+  color: $autolar-navy;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: $autolar-gray;
+}
+
+a {
+  color: $autolar-blue;
+  text-decoration: none;
+  transition: all $transition-fast;
+  &:hover {
+    color: color.adjust($autolar-blue, $lightness: -15%);
+  }
+}
+
+// Cards - Soft, 3D, Rounded
+.card {
+  background: $autolar-card-bg !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  border-radius: $border-radius-xl !important;
+  box-shadow: $shadow-3d, $shadow-soft !important;
+  color: $autolar-navy !important;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+  overflow: hidden;
+  margin-bottom: $spacing-md;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-3d, $shadow-hover !important;
+  }
+
+  .card-header {
+    background: transparent !important;
+    border-bottom: 1px solid $autolar-border !important;
+    font-family: $font-family-heading;
+    font-weight: 600;
+    color: $autolar-navy !important;
+    padding: 1.25rem 1.5rem !important;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .card-footer {
+    background: $autolar-sky !important;
+    border-top: none !important;
+    color: $autolar-gray !important;
+    font-size: $font-size-sm;
+    padding: 0.75rem 1.5rem !important;
+  }
+}
+
+// Header
+.autolar-header {
+  background: $autolar-header-bg !important;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $autolar-border;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  
+  .navbar-brand {
+    font-family: $font-family-heading;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: $autolar-navy !important;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    // Solar yellow dot for logo accent
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: $autolar-solar;
+      margin-left: 2px;
+    }
+  }
+}
+
+// Sidebar
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  flex-direction: column;
+  height: calc(100vh - 72px);
+  padding: 1rem 0.8rem;
+  overflow-y: auto;
+  background: $autolar-sidebar-bg !important;
+  border-right: 1px solid $autolar-border;
+  width: 260px;
+  min-width: 260px;
+  
+  .nav-link {
+    color: $autolar-gray !important;
+    border-radius: $border-radius-lg;
+    margin: 0.25rem 0;
+    padding: 0.85rem 1.25rem;
+    transition: all $transition-fast;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: $font-family-base;
+    
+    i, svg {
+      width: 20px;
+      text-align: center;
+      color: #94a3b8;
+      transition: all $transition-fast;
+    }
+    
+    &:hover {
+      color: $autolar-navy !important;
+      background: $autolar-sky;
+      i, svg {
+        color: $autolar-blue;
+      }
+    }
+    
+    &.active-sidebar-item {
+      background: $autolar-sky;
+      color: $autolar-blue !important;
+      font-weight: 600;
+      i, svg {
+        color: $autolar-blue;
+      }
+    }
+  }
+
+  .sidebar-nav > div:first-child {
+    padding: 0.6rem 0.9rem;
+    margin: 0.4rem 0 0.5rem !important;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em !important;
+  }
+}
+
+/* Mobile Offcanvas styles */
+.sidebar-offcanvas {
+  background: #ffffff !important;
+  width: min(86vw, 320px) !important;
+  
+  .nav-link {
+    color: $autolar-gray !important;
+    border-radius: $border-radius-lg;
+    margin: 0.25rem 0;
+    padding: 0.85rem 1.25rem;
+    transition: all $transition-fast;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: $font-family-base;
+    
+    i, svg {
+      width: 20px;
+      text-align: center;
+      color: #94a3b8;
+      transition: all $transition-fast;
+    }
+    
+    &:hover {
+      color: $autolar-navy !important;
+      background: $autolar-sky;
+      i, svg {
+        color: $autolar-blue;
+      }
+    }
+    
+    &.active-sidebar-item {
+      background: $autolar-sky;
+      color: $autolar-blue !important;
+      font-weight: 600;
+      i, svg {
+        color: $autolar-blue;
+      }
+    }
+  }
+
+  .sidebar-nav {
+    padding: 1rem 0.8rem;
+  }
+}
+
+// Buttons
+.btn-primary {
+  background-color: $autolar-blue !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: $border-radius-lg !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 500 !important;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2) !important;
+  transition: all $transition-fast !important;
+
+  &:hover {
+    transform: translateY(-1px);
+    background-color: color.adjust($autolar-blue, $lightness: -8%) !important;
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3) !important;
+  }
+}
+
+// Tables
+.table {
+  color: $autolar-navy !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-color: $autolar-navy !important;
+  --bs-table-border-color: $autolar-border !important;
+  
+  th {
+    color: $autolar-gray !important;
+    font-family: $font-family-heading;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #f8fafc !important;
+    border-bottom: 1px solid $autolar-border !important;
+    padding: 1rem !important;
+  }
+  td {
+    vertical-align: middle;
+    border-bottom: 1px solid $autolar-border !important;
+    padding: 1rem !important;
+    font-weight: 500;
+  }
+  tbody tr {
+    transition: background-color $transition-fast;
+    &:hover {
+      background-color: $autolar-sky !important;
+    }
+  }
+}
+
+// Badges
+.badge {
+  padding: 0.5em 1em !important;
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px;
+  font-size: 0.75rem !important;
+  
+  &.bg-success {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+    color: $autolar-green !important;
+  }
+  &.bg-danger {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: $autolar-error !important;
+  }
+  &.bg-info {
+    background-color: rgba(56, 189, 248, 0.1) !important;
+    color: $autolar-sky-accent !important;
+  }
+  &.bg-warning {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+    color: $autolar-solar !important;
+  }
+}
+
+// Inputs and Form Controls
+.form-control, .form-select, .input-group-text {
+  background-color: #ffffff !important;
+  border: 1px solid $autolar-border !important;
+  color: $autolar-navy !important;
+  border-radius: $border-radius-sm !important;
+  padding: 0.6rem 1rem !important;
+  font-weight: 500;
+  
+  &:focus {
+    border-color: $autolar-blue !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  }
+}
+
+.form-label {
+  font-weight: 500;
+  color: $autolar-gray;
+  margin-bottom: 0.5rem;
+}
+
+// Chart Tooltips Light Premium Mode
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid $autolar-border !important;
+  border-radius: $border-radius-sm !important;
+  box-shadow: $shadow-hover !important;
+  color: $autolar-navy !important;
+  font-family: $font-family-base;
+  font-weight: 500;
+}
+
+// Spinner
+.spinner-border {
+  color: $autolar-blue !important;
+}
+
+// Utility Classes
+.text-muted {
+  color: $autolar-gray !important;
+}
+.display-5 {
+  font-family: $font-family-heading;
+  font-weight: 700;
+  color: $autolar-navy;
+}
+
+// Shared AutoLar application shell and responsive surfaces
+.autolar-header {
+  position: relative;
+  z-index: 10;
+  min-height: 72px;
+  padding: 0 1.75rem;
+  background: $autolar-header-bg !important;
+  backdrop-filter: blur(14px);
+
+  .header-inner,
+  .header-actions,
+  .autolar-brand,
+  .header-device,
+  .header-status,
+  .header-weather,
+  .header-icon-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-inner {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .autolar-brand {
+    gap: 0.7rem;
+    margin: 0;
+    flex: 0 0 auto;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: $autolar-blue;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #eff8ff, #fff8e8);
+  }
+
+  .brand-copy {
+    display: grid;
+    line-height: 1.2;
+    color: $autolar-navy;
+    strong { font-family: $font-family-heading; font-size: 1.08rem; letter-spacing: -0.03em; }
+    small { margin-top: 0.2rem; color: $autolar-gray; font-size: 0.68rem; font-weight: 500; }
+  }
+
+  .header-actions { gap: 1.15rem; }
+  .header-device { gap: 0.55rem; }
+  .device-select { min-width: 132px; border-color: $autolar-border !important; background-color: #fff !important; }
+  .header-status { gap: 0.65rem; white-space: nowrap; }
+  .status-pill { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.38rem 0.7rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
+  .status-pill.is-online { color: #087a58; background: #e9f8f1; }
+  .status-pill.is-offline { color: #b42318; background: #fff0ef; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .header-weather { gap: 0.55rem; padding-left: 1rem; border-left: 1px solid $autolar-border; color: $autolar-purple; }
+  .header-weather span { display: grid; gap: 0.08rem; color: $autolar-gray; font-size: 0.74rem; line-height: 1.15; }
+  .header-weather strong { color: $autolar-navy; font-size: 0.78rem; }
+  .header-weather small { font-size: 0.64rem; }
+  .header-icon-actions { gap: 0.45rem; padding-left: 0.8rem; border-left: 1px solid $autolar-border; }
+  .header-icon-button { position: relative; width: 38px; height: 38px; display: grid; place-items: center; color: $autolar-gray; border-radius: 12px; transition: background $transition-fast, color $transition-fast; }
+  .header-icon-button:hover { color: $autolar-blue; background: $autolar-sky; }
+  .notification-dot { position: absolute; top: 8px; right: 8px; width: 7px; height: 7px; border: 1.5px solid #fff; border-radius: 50%; background: $autolar-solar; }
+}
+
+.mobile-menu-bar { display: none; }
+.mobile-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
+  color: $autolar-blue;
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 0.83rem;
+  font-weight: 650;
+}
+.mobile-menu-button:hover, .mobile-menu-button:focus-visible { background: $autolar-sky; }
+
+.dashboard-content > .row { --bs-gutter-x: 1.15rem; --bs-gutter-y: 0.15rem; }
+.dashboard-content .card { height: 100%; }
+.dashboard-content > .row:nth-child(2) .card { min-height: 220px; }
+.dashboard-content > .row:nth-child(3) .card { min-height: 150px; }
+.chart-card .card-body { height: 300px; min-height: 260px; padding: 1rem 1.25rem 1.25rem !important; }
+.chart-card .card-header { padding: 1.1rem 1.35rem !important; }
+.chart-card .recharts-cartesian-grid-horizontal line,
+.chart-card .recharts-cartesian-grid-vertical line { stroke: #edf2f7; }
+.chart-card .recharts-text { fill: #8190a5; font-size: 11px; }
+.chart-card .recharts-legend-item-text { color: $autolar-gray !important; font-size: 0.75rem; }
+
+.solar-hero {
+  min-height: 250px;
+  background: linear-gradient(125deg, #eaf6ff 0%, #f8fbff 55%, #fff8e8 100%) !important;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.08), inset 0 1px 0 rgba(255,255,255,.9) !important;
+}
+.solar-hero .card-body { z-index: 1; }
+.solar-hero-location h4 { color: $autolar-navy; font-size: 1.18rem; }
+.solar-hero-sun { opacity: .4; color: $autolar-solar; }
+.hero-status-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .8rem !important; border: 1px solid rgba(16,185,129,.12); border-radius: 999px !important; color: #087a58 !important; background: #e8f8f0 !important; box-shadow: 0 3px 10px rgba(16,185,129,.08); }
+.hero-status-badge > div { width: 7px; height: 7px; border-radius: 50%; background: currentColor !important; }
+.hero-status-badge.hero-status-offline { color: #b42318 !important; background: #fff0ef !important; border-color: rgba(239,68,68,.1); }
+.hero-weather-pill { padding: .45rem .7rem !important; border: 1px solid rgba(226,232,240,.8); }
+.angle-value { color: $autolar-blue; }
+.solar-panel-wrap { width: 34%; min-width: 115px; display: flex; align-items: center; justify-content: center; padding: .7rem; }
+.solar-panel-illustration {
+  width: min(100%, 145px);
+  aspect-ratio: 1.5;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3px;
+  padding: 4px;
+  border: 2px solid #60a5fa;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 12px 24px rgba(37,99,235,.25), inset 0 2px 5px rgba(255,255,255,.2);
+  transform: perspective(450px) rotateX(var(--panel-tilt, 0deg)) rotateZ(var(--panel-pan, 0deg));
+  transition: transform .5s ease-out;
+}
+.solar-panel-illustration > div { border-radius: 3px; background: linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.04)); }
+
+.notification-card { border-left: 3px solid $autolar-sky-accent !important; }
+.notification-card.notification-alert { border-left-color: $autolar-solar !important; }
+.notification-card.notification-system { border-left-color: $autolar-green !important; }
+.notification-card.notification-ai { border-left-color: $autolar-purple !important; }
+.notification-card .card-body { padding: 1rem 1.2rem !important; }
+.notification-card .card-title { margin: 0 0 .35rem; font-size: .92rem; }
+.notification-card .card-text { font-size: .88rem; }
+.notification-card .text-muted { font-size: .75rem; }
+
+.page-heading { margin-bottom: 1.35rem; }
+.page-heading h1 { margin: 0; font-size: clamp(1.35rem, 2vw, 1.7rem); }
+.page-heading p { margin: 0.3rem 0 0; color: $autolar-gray; font-size: 0.9rem; }
+.section-toolbar { max-width: 520px; margin-bottom: 1.25rem; }
+.table-responsive { border: 1px solid $autolar-border; border-radius: $border-radius-lg; background: #fff; }
+.table-responsive .table { min-width: 600px; margin: 0; }
+.summary-label { display: block; color: $autolar-gray; font-size: .75rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.summary-value { display: block; margin-top: .35rem; color: $autolar-navy; font-family: $font-family-heading; font-size: 1.5rem; }
+.summary-value small { color: $autolar-gray; font-family: $font-family-base; font-size: .75rem; font-weight: 600; }
+.energy-summary .card { border-radius: $border-radius-lg; }
+.notification-tabs .nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+.notification-tabs .nav-link { white-space: nowrap; }
+
+.autolar-footer { margin-top: auto; padding: 1.1rem 1.75rem; border-top: 1px solid $autolar-border; background: rgba(255,255,255,.7); }
+.autolar-footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; color: $autolar-gray; font-size: 0.78rem; }
+.autolar-footer p { margin: 0; font-size: inherit; }
+
+// Compact pill navigation used by the dashboard reference layout.
+.header-nav { display: flex; align-items: center; justify-content: center; gap: .3rem; }
+.header-nav-link {
+  display: inline-flex; align-items: center; gap: .45rem; white-space: nowrap;
+  padding: .58rem .95rem; border: 1px solid #e8e9eb; border-radius: 999px;
+  background: #f7f8f8; color: #25282b; font-size: .78rem; line-height: 1;
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.header-nav-link:hover { color: #111315; background: #eceeef; }
+.header-nav-link.active { color: #fff; background: #17191c; border-color: #17191c; }
+.header-nav-link.active:hover { color: #fff; background: #35383b; }
+.header-nav-link svg { display: none; }
+
+.app .sidebar { display: none !important; }
+.app .app-main { padding: 1.6rem 2rem 2rem; }
+.app .autolar-header { padding: 0 1.75rem; }
+.app .autolar-header .header-inner { gap: 1rem; }
+.app .autolar-header .header-actions { gap: .65rem; }
+.app .autolar-header .header-nav { flex: 1 1 auto; }
+
+@media (max-width: 1199.98px) {
+  .app .header-nav { gap: .2rem; }
+  .app .header-nav-link { padding: .58rem .7rem; font-size: .73rem; }
+  .app .autolar-header .header-weather { display: none; }
+}
+
+@media (max-width: 1100px) {
+  .autolar-header { padding: 0 1.15rem; }
+  .autolar-header .header-actions { gap: 0.75rem; }
+  .autolar-header .header-weather { display: none; }
+  .sidebar { width: 225px; min-width: 225px; }
+  .app-main { padding: 1.5rem; }
+}
+
+@media (max-width: 991.98px) {
+  .app .header-nav { display: none; }
+  .app .sidebar { display: none !important; }
+  .app .app-main { padding: 1.35rem 1rem 1.75rem; }
+  .autolar-header { min-height: 64px; padding: 0.55rem 0.9rem; }
+  .autolar-header .header-inner { gap: 0.6rem; }
+  .autolar-header .brand-mark { width: 36px; height: 36px; border-radius: 12px; }
+  .autolar-header .brand-copy strong { font-size: 0.98rem; }
+  .autolar-header .brand-copy small { font-size: 0.61rem; }
+  .autolar-header .header-actions { gap: 0.55rem; }
+  .autolar-header .header-device { gap: 0; }
+  .autolar-header .header-device > span { display: none; }
+  .autolar-header .device-select { min-width: 108px; width: 108px; padding: 0.45rem 1.5rem 0.45rem 0.55rem !important; font-size: 0.73rem; }
+  .autolar-header .status-pill { padding: 0.34rem 0.5rem; font-size: 0.65rem; }
+  .autolar-header .status-dot { width: 6px; height: 6px; }
+  .autolar-header .header-icon-actions { gap: 0.1rem; padding-left: 0.35rem; }
+  .autolar-header .header-icon-button { width: 32px; height: 34px; }
+  .autolar-header .header-icon-button svg { width: 17px; }
+  .autolar-header .notification-dot { top: 6px; right: 5px; }
+  .app-content { flex-direction: column; overflow: visible; }
+  .mobile-menu-bar { display: flex; padding: 0.65rem 0.9rem; border-bottom: 1px solid rgba(226,232,240,.75); background: rgba(255,255,255,.72); }
+  .app-main { padding: 1.35rem 1rem 1.75rem; overflow: visible; }
+  .dashboard-content > .row { --bs-gutter-x: 0.75rem; }
+  .dashboard-content > .row:nth-child(2) .card { min-height: 205px; }
+  .dashboard-content > .row:nth-child(3) .card { min-height: 128px; }
+  .dashboard-content .card .card-body { padding: 1rem !important; }
+  .chart-card .card-body { height: 250px; min-height: 235px; padding: 0.65rem !important; }
+  .chart-card .card-header { padding: 0.95rem 1rem !important; }
+  .chart-card .card-header h5 { font-size: 0.95rem; }
+  .page-heading { margin-bottom: 1rem; }
+  .section-toolbar { max-width: none; }
+  .solar-hero .card-body { padding: 1.15rem !important; }
+  .solar-hero-location h4 { font-size: 1.04rem; }
+  .solar-panel-wrap { width: 38%; min-width: 96px; padding: .35rem; }
+  .solar-hero-bottom { gap: .25rem; }
+  .solar-hero-bottom .d-flex.gap-4 { gap: 1.1rem !important; }
+  .notification-card .card-body { align-items: flex-start !important; flex-direction: column; }
+  .notification-actions { justify-content: stretch !important; }
+  .notification-actions .btn { flex: 1; }
+  .energy-summary .summary-value { font-size: 1.25rem; }
+  .autolar-footer { padding: 1rem; }
+  .autolar-footer-inner { flex-direction: column; text-align: center; gap: 0.3rem; }
+}
+
+@media (max-width: 767.98px) {
+  .autolar-header { min-height: 62px; }
+  .app-main { padding: 1.15rem 0.85rem 1.75rem; }
+}
+
+@media (max-width: 420px) {
+  .autolar-header .brand-copy small { display: none; }
+  .autolar-header .header-actions { gap: 0.35rem; }
+  .autolar-header .device-select { width: 100px; min-width: 100px; }
+  .autolar-header .status-pill { font-size: 0; gap: 0; width: 26px; height: 26px; justify-content: center; padding: 0; }
+  .autolar-header .status-dot { width: 8px; height: 8px; }
+  .app-main { padding-right: 0.65rem; padding-left: 0.65rem; }
+}
+
+@media (max-width: 360px) {
+  .autolar-header { padding-right: 0.55rem; padding-left: 0.55rem; }
+  .autolar-header .header-inner { gap: 0.25rem; }
+  .autolar-header .brand-mark { width: 32px; height: 32px; }
+  .autolar-header .header-actions { gap: 0.25rem; }
+  .autolar-header .device-select { width: 88px; min-width: 88px; }
+  .autolar-header .header-icon-actions { padding-left: 0.2rem; }
+  .autolar-header .header-icon-button { width: 28px; }
+  .autolar-header .header-profile-action { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+@media (hover: none) {
+  .card:hover { transform: none; box-shadow: $shadow-3d, $shadow-soft !important; }
+}
+
+// Shared reference palette across every route; page grids and card order stay in place.
+.app { background: #e7e8e7; }
+.app-main { background: #e7e8e7; }
+.autolar-header { background: rgba(255,255,255,.96) !important; border-color: #e7e8ea; box-shadow: none; }
+.autolar-header .brand-mark { color: #17191c; border-color: #e7e8ea; border-radius: 50%; background: #f2f3f3; }
+.autolar-header .navbar-brand::after { background: #ec3986; }
+.autolar-header .device-select { border-radius: 999px !important; }
+.autolar-header .header-icon-button { width: 40px; height: 40px; border: 1px solid #e8e9eb; border-radius: 50%; background: #f7f8f8; }
+.autolar-header .header-icon-button:hover { color: #17191c; background: #eceeef; }
+.sidebar { background: #fff !important; border-color: #e7e8ea; }
+.sidebar .nav-link { color: #666b70 !important; border-radius: 999px; }
+.sidebar .nav-link:hover { color: #17191c !important; background: #f1f2f3; }
+.sidebar .nav-link.active-sidebar-item { color: #fff !important; background: #17191c; }
+.sidebar .nav-link.active-sidebar-item svg { color: #fff; }
+.mobile-menu-button { color: #17191c; border-color: #e5e6e7; background: #fff; }
+.mobile-menu-button:hover { background: #f1f2f3; }
+.autolar-footer { background: #fff; border-color: #e7e8ea; }
+
+.reference-dashboard .page-heading { margin-bottom: 1.35rem; }
+.reference-dashboard .page-heading h1 { color: #17191c; font-size: clamp(1.65rem, 2.3vw, 2rem); font-weight: 500; letter-spacing: -.045em; }
+.reference-dashboard .page-heading p { color: #777c81; }
+.app-main .card { border: 1px solid #eceef0 !important; border-radius: 23px !important; background: #fff !important; box-shadow: 0 5px 18px rgba(20,24,28,.035) !important; color: #17191c !important; }
+.app-main .card:hover { transform: translateY(-1px); box-shadow: 0 9px 22px rgba(20,24,28,.06) !important; }
+.app-main .card .card-header { color: #17191c !important; border-color: #eff0f1 !important; }
+.app-main .card .card-footer { color: #74797e !important; background: #f5f6f6 !important; }
+.app-main .text-muted { color: #74797e !important; }
+.reference-dashboard .solar-hero { min-height: 250px; background: #fff !important; }
+.reference-dashboard .solar-hero-sun { color: #13a538 !important; opacity: .16; }
+.reference-dashboard .solar-hero-location h4 { color: #17191c; }
+.reference-dashboard .hero-weather-pill { background: #f5f6f6 !important; box-shadow: none !important; }
+.reference-dashboard .hero-weather-pill svg { color: #ec3986 !important; }
+.reference-dashboard .hero-status-badge { color: #128d31 !important; background: #e9f8ed !important; box-shadow: none; }
+.reference-dashboard .hero-status-badge.hero-status-offline { color: #777c81 !important; background: #f0f1f2 !important; }
+.reference-dashboard .solar-panel-illustration { border-color: #77adff; background: linear-gradient(135deg,#3180f4,#1764d0); box-shadow: 0 8px 18px rgba(36,120,239,.16); }
+.reference-dashboard .solar-hero-bottom .fs-3 { color: #2478ef !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(1) .card-body > div:first-child > div,
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(4) .card-body > div:first-child > div { color: #13a538 !important; background: rgba(19,165,56,.10) !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(2) .card-body > div:first-child > div,
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(3) .card-body > div:first-child > div { color: #2478ef !important; background: rgba(36,120,239,.10) !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(5) .card-body > div:first-child > div { color: #ec3986 !important; background: rgba(236,57,134,.10) !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(6) .card-body > div:first-child > div { color: #13a538 !important; background: rgba(19,165,56,.10) !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(1) .card-body svg { color: #13a538 !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(2) .card-body svg,
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(3) .card-body svg { color: #2478ef !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(5) .card-body svg { color: #ec3986 !important; }
+.reference-dashboard > .row:nth-of-type(3) > div:nth-child(6) .card-body svg { color: #13a538 !important; }
+.app-main .btn-primary { color: #fff !important; background: #17191c !important; box-shadow: none !important; border-radius: 999px !important; }
+.app-main .btn-primary:hover { background: #35383b !important; }
+.reference-dashboard .chart-card .recharts-cartesian-grid-horizontal line,
+.reference-dashboard .chart-card .recharts-cartesian-grid-vertical line { stroke: #eceef0; }
+.reference-dashboard .chart-card .recharts-line-curve { stroke: #2478ef; }
+.reference-dashboard .chart-card .recharts-text { fill: #85898e; }
+.reference-dashboard .chart-card .recharts-legend-item-text { color: #74797e !important; }
+.reference-dashboard .badge.bg-success { color: #128d31 !important; background: #e9f8ed !important; }
+.reference-dashboard .badge.bg-info { color: #2478ef !important; background: #edf4ff !important; }
+.reference-dashboard .badge.bg-warning { color: #ec3986 !important; background: #fff0f6 !important; }
+.reference-dashboard .spinner-border { color: #2478ef !important; }
+
+@media (max-width: 991.98px) {
+  .sidebar-offcanvas { background: #fff !important; }
+  .sidebar-offcanvas .nav-link.active-sidebar-item { color: #fff !important; background: #17191c; }
+}
+
+// Refined AutoLar theme: keep existing dashboard/card geometry while updating
+// the type, controls, and floating top navigation.
+:root {
+  --autolar-ink: #151a17;
+  --autolar-muted: #7a817d;
+  --autolar-mint: #a4e878;
+  --autolar-mint-soft: #edf8e8;
+  --autolar-line: #e9ede9;
+}
+
+body {
+  font-family: 'DM Sans', 'Inter', 'Segoe UI', sans-serif;
+  color: #252b27;
+  background-color: #f1f3f0;
+  background-image: radial-gradient(ellipse at 50% 0%, #fafbf9 0%, #f1f3f0 72%);
+}
+
+h1, h2, h3, h4, h5, h6,
+.btn, .form-control, .form-select, .nav-link {
+  font-family: 'DM Sans', 'Inter', 'Segoe UI', sans-serif;
+}
+
+.autolar-header {
+  position: sticky;
+  top: 14px;
+  z-index: 1030;
+  width: min(calc(100% - 40px), 1480px);
+  min-height: 68px;
+  margin: 14px auto 0;
+  padding: 0 1.1rem;
+  border: 1px solid rgba(226, 232, 226, 0.9);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94) !important;
+  box-shadow: 0 10px 30px rgba(24, 35, 27, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.autolar-header .navbar-brand::after { background-color: #a4e878; }
+.autolar-header .brand-mark {
+  color: #1c291f;
+  border-color: #dcebd5;
+  background: linear-gradient(145deg, #c5f49f, #a4e878);
+  border-radius: 13px;
+}
+.autolar-header .header-nav { gap: 0.22rem; }
+.autolar-header .header-nav-link {
+  padding: 0.65rem 0.9rem;
+  color: #626b65;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  background: transparent;
+  font-size: 0.81rem;
+  font-weight: 550;
+}
+.autolar-header .header-nav-link:hover {
+  color: #1c291f;
+  background: #f5f8f3;
+}
+.autolar-header .header-nav-link.active {
+  color: #263320;
+  border-color: #c9e9b5;
+  background: #eaf7e3;
+}
+.autolar-header .header-nav-link.active:hover { background: #e2f3d8; }
+.autolar-header .device-select,
+.autolar-header .header-icon-button {
+  border-color: var(--autolar-line) !important;
+  background-color: #fbfcfa !important;
+}
+.autolar-header .header-icon-button:hover { color: #283a24; background: var(--autolar-mint-soft) !important; }
+.autolar-header .status-pill.is-online { color: #287346; background: #edf8e8; }
+
+.btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease !important;
+}
+.btn-primary,
+.app-main .btn-primary {
+  color: #1b2818 !important;
+  border: 1px solid #9cdd70 !important;
+  background: #a4e878 !important;
+  box-shadow: none !important;
+}
+.btn-primary:hover,
+.app-main .btn-primary:hover {
+  color: #162213 !important;
+  border-color: #8dcf61 !important;
+  background: #96df66 !important;
+  transform: translateY(-1px);
+}
+.btn-outline-primary {
+  color: #344532 !important;
+  border-color: #b8dba5 !important;
+}
+.btn-outline-primary:hover { color: #1c291f !important; background: #edf8e8 !important; }
+.btn-outline-secondary, .btn-secondary {
+  color: #4c554f !important;
+  border-color: #e3e8e3 !important;
+  background: #f7f9f6 !important;
+}
+.btn-outline-secondary:hover, .btn-secondary:hover { background: #eef2ed !important; }
+
+@media (max-width: 991.98px) {
+  .autolar-header { width: calc(100% - 24px); min-height: 62px; margin-top: 10px; top: 10px; border-radius: 18px; }
+}
+
+// 60/30/10 workspace palette: neutral canvas, sage surfaces, lime accents.
+:root {
+  --autolar-canvas: #f4f6f2;
+  --autolar-surface: #e7eee3;
+  --autolar-accent: #a4e878;
+  --autolar-ink: #202820;
+  --autolar-muted: #687368;
+  --autolar-line: #dce5d8;
+}
+
+html, body, #root { min-height: 100%; }
+body { background: var(--autolar-canvas); }
+#root { width: 100%; max-width: none; text-align: left; border: 0; }
+.app { min-height: 100vh; background: var(--autolar-canvas); }
+.app-content { width: min(100%, 1680px); margin: 0 auto; }
+.app .autolar-header {
+  width: min(calc(100% - 48px), 1680px);
+  margin: 14px auto 0;
+}
+.app .header-inner { justify-content: space-between; }
+.app .header-actions { margin-left: auto; }
+
+// Keep every route in one predictable left navigation rail on desktop.
+.app .sidebar {
+  display: flex !important;
+  position: sticky;
+  top: 98px;
+  height: calc(100vh - 112px);
+  flex: 0 0 248px;
+  width: 248px;
+  min-width: 248px;
+  margin: 20px 0 20px 24px;
+  padding: 1.1rem 0.8rem;
+  border: 1px solid var(--autolar-line);
+  border-radius: 22px;
+  background: var(--autolar-surface) !important;
+}
+.app .sidebar .sidebar-nav > div:first-child { color: var(--autolar-muted) !important; }
+.app .sidebar .nav-link {
+  color: var(--autolar-muted) !important;
+  border-radius: 13px;
+  padding: 0.75rem 0.9rem;
+}
+.app .sidebar .nav-link svg { color: currentColor; }
+.app .sidebar .nav-link:hover { color: var(--autolar-ink) !important; background: rgba(255,255,255,.65); }
+.app .sidebar .nav-link.active-sidebar-item {
+  color: var(--autolar-ink) !important;
+  background: var(--autolar-accent);
+  font-weight: 700;
+}
+.app .sidebar .nav-link.active-sidebar-item svg { color: var(--autolar-ink); }
+.app .app-main { min-width: 0; padding: 2rem clamp(1.25rem, 2.5vw, 2.5rem); background: var(--autolar-canvas); }
+.app-main .card { background: #fff !important; }
+.app-main .btn-primary { color: var(--autolar-ink) !important; background: var(--autolar-accent) !important; border-color: #98d96b !important; }
+.app-main .btn-primary:hover { background: #96df66 !important; }
+
+// Shared account menu and floating mobile navigation.
+.account-menu {
+  min-width: 190px;
+  padding: .45rem;
+  border: 1px solid var(--autolar-line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 36px rgba(25, 35, 25, .15) !important;
+}
+.account-menu .dropdown-item { display: flex; align-items: center; gap: .65rem; padding: .65rem .75rem; border-radius: 10px; color: var(--autolar-ink); font-size: .88rem; }
+.account-menu .dropdown-item svg { color: #637064; }
+.account-menu .dropdown-item:hover { background: var(--autolar-mint-soft); }
+.header-icon-actions .dropdown-toggle::after,
+.mobile-profile-wrap .dropdown-toggle::after { display: none; }
+.mobile-bottom-nav { display: none; }
+.mobile-nav-link { position: relative; display: flex; flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; border: 0; background: transparent; color: #778078; text-decoration: none; font: inherit; font-size: .65rem; font-weight: 600; line-height: 1; cursor: pointer; }
+.mobile-nav-link > svg { flex: 0 0 auto; }
+.mobile-nav-link.active { color: #293729; }
+.mobile-nav-link.active:not(.mobile-nav-ai) { border-radius: 999px; background: var(--autolar-mint-soft) !important; }
+.mobile-nav-link.active:not(.mobile-nav-ai) > svg { color: #293729; }
+.mobile-nav-ai { transform: translateY(-7px); }
+.mobile-ai-icon { display: grid; width: 48px; height: 48px; margin-bottom: -2px; place-items: center; border: 5px solid var(--autolar-canvas); border-radius: 50%; background: var(--autolar-accent); color: #243022; box-shadow: 0 4px 12px rgba(48, 76, 38, .18); }
+.mobile-nav-ai.active .mobile-ai-icon { background: #91d963; }
+.mobile-bell-icon { position: relative; display: grid; place-items: center; }
+.mobile-nav-popover { position: absolute; z-index: 1040; bottom: calc(100% + 18px); left: 50%; width: 190px; padding: .45rem; transform: translateX(-50%); border: 1px solid var(--autolar-line); border-radius: 16px; background: #fff; box-shadow: 0 14px 36px rgba(25, 35, 25, .15); }
+.mobile-nav-popover a { display: flex; align-items: center; gap: .65rem; padding: .7rem .75rem; border-radius: 10px; color: var(--autolar-ink); font-size: .85rem; }
+.mobile-nav-popover a:hover { background: var(--autolar-mint-soft); }
+.mobile-profile-wrap { display: flex; flex: 1 1 0; min-width: 0; }
+.mobile-analysis-wrap { position: relative; display: flex; flex: 1 1 0; min-width: 0; }
+.mobile-analysis-wrap .mobile-nav-link { width: 100%; }
+.mobile-profile-wrap .dropdown-toggle { width: 100%; }
+.mobile-profile-wrap .mobile-nav-link,
+.mobile-analysis-wrap .mobile-nav-link { padding: 0; border-radius: 0; box-shadow: none !important; }
+.mobile-profile-wrap .mobile-nav-link:hover,
+.mobile-analysis-wrap .mobile-nav-link:hover { color: #293729; background: transparent !important; }
+.mobile-bottom-nav .mobile-profile-wrap .dropdown-toggle { color: #778078 !important; border: 0 !important; background: transparent !important; }
+.mobile-bottom-nav .mobile-profile-wrap .dropdown-toggle.active,
+.mobile-bottom-nav .mobile-profile-wrap .dropdown-toggle[aria-expanded="true"] { color: #293729 !important; border-radius: 999px !important; background: var(--autolar-mint-soft) !important; }
+.mobile-bottom-nav .mobile-profile-wrap .dropdown-toggle:focus,
+.mobile-bottom-nav .mobile-profile-wrap .dropdown-toggle:active { box-shadow: none !important; }
+.mobile-account-menu { margin-bottom: .6rem !important; }
+.mobile-profile-wrap .dropdown-toggle { display: flex; align-self: stretch; align-items: center; justify-content: center; min-height: 54px; padding: .35rem 0 !important; line-height: 1; }
+.mobile-profile-wrap .dropdown-toggle > svg { display: block; margin: 0 auto; }
+.header-icon-actions > .dropdown { display: flex; align-items: center; justify-content: center; }
+.header-icon-actions > .dropdown > .dropdown-toggle { display: grid; place-items: center; padding: 0 !important; line-height: 1; }
+
+// Use a more distinctive heading face and a restrained solar accent underline.
+.app-main h1, .app-main h2, .app-main h3, .app-main h4, .app-main h5,
+.autolar-header .brand-copy strong { font-family: 'Manrope', 'Outfit', sans-serif; }
+.reference-dashboard .page-heading { margin-bottom: 1.45rem; }
+.reference-dashboard .page-heading h1 { position: relative; display: inline-block; padding-bottom: .32rem; font-family: 'Manrope', sans-serif; font-size: clamp(1.75rem, 2.5vw, 2.15rem); font-weight: 700; letter-spacing: -.055em; line-height: 1.15; }
+.reference-dashboard .page-heading h1::after { content: ''; position: absolute; left: 0; bottom: 0; width: 2.4rem; height: 3px; border-radius: 999px; background: var(--autolar-accent); }
+.reference-dashboard .page-heading p { margin-top: .45rem; font-size: .92rem; letter-spacing: .005em; }
+.reference-dashboard .solar-hero-location h4 { font-family: 'Manrope', sans-serif; font-weight: 700; letter-spacing: -.025em; }
+.app-main .card .card-header { font-family: 'Manrope', sans-serif; font-weight: 700; letter-spacing: -.015em; }
+.feature-page { width: 100%; min-width: 0; }
+.analysis-toolbar { display: flex; align-items: end; flex-wrap: wrap; gap: .8rem; width: fit-content; max-width: 100%; margin: 0 0 1.4rem; padding: .9rem; border: 1px solid var(--autolar-line); border-radius: 18px; background: #fff; }
+.analysis-range-field { width: 190px; margin: 0; }
+.analysis-range-field .form-label { margin-bottom: .35rem; color: #566357; font-size: .72rem; font-weight: 700; }
+.analysis-range-field .form-select { min-height: 42px; }
+.analysis-date-range { width: min(440px, 100%); }
+.analysis-date-range .form-control { min-width: 0; }
+.feature-empty-state { display: grid; justify-items: center; gap: .35rem; margin: .6rem 0 1.25rem; padding: 2.25rem 1.2rem; border: 1px dashed #d5dfd2; border-radius: 20px; background: rgba(255,255,255,.7); text-align: center; }
+.feature-empty-state strong { color: #344234; font-family: 'Manrope', sans-serif; font-size: 1rem; }
+.feature-empty-state p { max-width: 420px; margin: 0; color: #778078; font-size: .85rem; }
+.analytics-page .row, .energy-history-page .row, .assistant-page .row { --bs-gutter-y: 1rem; }
+.analytics-page .display-5 { font-size: clamp(1.25rem, 2vw, 1.7rem); }
+.analytics-page .card-title { color: #69736b; font-size: .8rem; font-weight: 650; }
+.analytics-page .chart-card, .energy-history-page .chart-card { min-width: 0; }
+.energy-history-page h5 { margin: 0 0 .8rem; font-size: 1.05rem; }
+.energy-history-page .table-responsive { margin-bottom: .5rem; overscroll-behavior-inline: contain; }
+.energy-history-page .table th, .energy-history-page .table td { white-space: nowrap; }
+.energy-history-page .energy-summary .card-body { min-height: 98px; }
+.device-control-page .card-header { background: #fbfcfa !important; }
+.device-control-page .card-body > p:first-child { color: #687368; }
+.device-control-page .card-body > p:first-child strong { display: inline-flex; margin-left: .3rem; padding: .25rem .55rem; border-radius: 999px; color: #3b6532; background: #edf8e8; font-size: .78rem; }
+.device-control-page .btn { min-height: 44px; }
+.notifications-surface { padding: 1.1rem; border: 1px solid var(--autolar-line); border-radius: 22px; background: #fff; }
+.notifications-page .notification-actions { gap: .55rem; margin-top: 1rem; }
+.notifications-page .notification-actions .btn { margin: 0 !important; }
+.notifications-page .notification-card { margin-bottom: .65rem; border: 1px solid #edf0eb !important; border-left: 3px solid #a4e878 !important; border-radius: 15px !important; box-shadow: none !important; }
+.notifications-page .notification-card:hover { transform: none; }
+.settings-page > form { max-width: 900px; }
+.settings-page .card-header .card-title { margin: 0; font-size: 1rem; }
+.settings-page .form-text { color: #7a817d; font-size: .78rem; line-height: 1.5; }
+.settings-page > form > .d-flex { position: sticky; bottom: 1rem; z-index: 4; padding: .7rem; border: 1px solid var(--autolar-line); border-radius: 16px; background: rgba(255,255,255,.94); box-shadow: 0 8px 24px rgba(25,35,25,.08); }
+.assistant-page .card-header { min-height: 58px; }
+.assistant-page .card-header strong { line-height: 1.3; }
+.assistant-page dl dt { color: #718071; font-size: .82rem; font-weight: 600; }
+.assistant-page dl dd { overflow-wrap: anywhere; color: #293429; font-size: .82rem; text-align: right; }
+.assistant-page .btn { min-height: 44px; }
+
+// App-wide type system: strong Manrope headings, calm Inter reading text, and
+// one consistent AutoLar underline on every feature screen.
+.app { font-family: 'Inter', system-ui, sans-serif; color: #273229; }
+.app-main, .app-main p, .app-main label, .app-main input, .app-main button,
+.app-main select, .app-main textarea, .app-main td, .app-main th {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.app-main h1, .app-main h2, .app-main h3, .app-main h4, .app-main h5,
+.autolar-header .brand-copy strong, .sidebar .nav-link {
+  font-family: 'Manrope', 'Outfit', system-ui, sans-serif;
+}
+.app-main .page-heading {
+  position: relative;
+  margin-bottom: 1.6rem;
+  padding-bottom: .95rem;
+  border-bottom: 1px solid #e2e9df;
+}
+.app-main .page-heading h1 {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0 0 .38rem;
+  color: #202b22;
+  font-family: 'Manrope', 'Outfit', system-ui, sans-serif;
+  font-size: clamp(1.75rem, 2.35vw, 2.15rem);
+  font-weight: 750;
+  letter-spacing: -.055em;
+  line-height: 1.2;
+}
+.app-main .page-heading h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8fd65f, #b6eb92);
+}
+.app-main .page-heading p {
+  margin: .42rem 0 0;
+  color: #69756b;
+  font-size: .91rem;
+  font-weight: 450;
+  letter-spacing: .005em;
+  line-height: 1.55;
+}
+.app-main .card .card-header h1,
+.app-main .card .card-header h2,
+.app-main .card .card-header h3,
+.app-main .card .card-header h4,
+.app-main .card .card-header h5,
+.app-main h2, .app-main h3, .app-main h4, .app-main h5 {
+  color: #28362a;
+  font-family: 'Manrope', 'Outfit', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.app-main .card .card-header h5,
+.app-main .card .card-header strong { text-decoration: underline; text-decoration-color: #a4e878; text-decoration-thickness: 2px; text-underline-offset: .28em; }
+.app-main .page-heading + .analysis-toolbar,
+.app-main .page-heading + form { margin-top: .15rem; }
+.weather-summary-card .card-body { display: flex; flex-direction: column; justify-content: center; gap: .9rem; padding: 1.25rem !important; }
+.weather-summary-heading { display: flex; align-items: center; gap: .75rem; }
+.weather-summary-icon { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border-radius: 14px; color: #5f8f49; background: #edf8e8; }
+.weather-summary-heading > div { display: grid; gap: .2rem; min-width: 0; }
+.weather-summary-kicker { color: #778078; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.weather-summary-heading strong { color: #263126; font-family: 'Manrope', sans-serif; font-size: 1rem; line-height: 1.3; }
+.weather-summary-meta { display: flex; flex-wrap: wrap; gap: .45rem; }
+.weather-chip { display: inline-flex; align-items: center; padding: .35rem .6rem; border-radius: 999px; color: #53664e; background: #f2f6ef; font-size: .72rem; font-weight: 650; }
+.confidence-chip { color: #287346; background: #edf8e8; }
+.weather-summary-empty, .weather-summary-stale { margin: 0; color: #7a817d; font-size: .78rem; line-height: 1.45; }
+.weather-data-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+.weather-data-grid > div { display: grid; gap: .15rem; min-width: 0; padding: .55rem .6rem; border: 1px solid #edf1e9; border-radius: 12px; background: #fbfcfa; }
+.weather-data-grid span { color: #7a817d; font-size: .65rem; font-weight: 650; }
+.weather-data-grid strong { color: #263126; font-family: 'Manrope', sans-serif; font-size: .85rem; overflow-wrap: anywhere; }
+.tracker-position-card .card-body { display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; padding: 1.35rem !important; }
+.tracker-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.tracker-card-kicker { color: #778078; font-size: .69rem; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; }
+.tracker-card-heading h2 { margin: .25rem 0 0; overflow-wrap: anywhere; font-size: clamp(1.05rem, 1.6vw, 1.3rem); }
+.tracker-live-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .48rem .72rem !important; border: 1px solid transparent; border-radius: 999px !important; font-size: .68rem !important; text-transform: uppercase; }
+.tracker-live-badge span { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.tracker-live-badge.online { color: #317443; background: #edf8e8; }
+.tracker-live-badge.offline { color: #787f78; background: #f1f3ef; }
+.tracker-angle-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; margin: 1.3rem 0 1rem; }
+.tracker-angle { display: grid; gap: .25rem; padding: .75rem .85rem; border: 1px solid #edf1e9; border-radius: 15px; background: #fbfcfa; }
+.tracker-angle > span { display: flex; align-items: center; gap: .4rem; color: #778078; font-size: .74rem; font-weight: 650; }
+.tracker-angle > span svg { color: #658b55; }
+.tracker-angle strong { color: #28362a; font-family: 'Manrope', sans-serif; font-size: 1.5rem; line-height: 1.2; }
+.tracker-reading-time { display: flex; align-items: center; gap: .4rem; color: #7a817d; font-size: .73rem; line-height: 1.4; }
+.telemetry-not-reported { color: #798179; font-size: .8rem; font-weight: 550; }
+.device-id-link { max-width: min(34vw, 330px); text-decoration: none; }
+.device-id-link strong { overflow: hidden; color: #344234; font-size: .8rem; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.notification-empty-state { padding: 2rem 1rem !important; border: 1px dashed #d5dfd2 !important; border-radius: 14px; color: #778078; background: #fbfcfa; text-align: center; font-size: .85rem; }
+.telemetry-metric-body { display: flex; min-height: 150px; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: .85rem; padding: 1.15rem !important; }
+.telemetry-metric-heading { display: flex; align-items: center; gap: .65rem; }
+.telemetry-metric-heading > span:last-child { color: #748074 !important; font-size: .69rem !important; letter-spacing: .055em; }
+.telemetry-metric-icon { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border: 1px solid #e3efd9; border-radius: 12px; color: #537b3f; background: #f0f8e9; }
+.telemetry-metric-value { display: flex; align-items: baseline; gap: .32rem; padding-left: .1rem; }
+.telemetry-metric-value strong { color: #263126; font-family: 'Manrope', sans-serif; font-size: 1.55rem; font-weight: 750; letter-spacing: -.04em; line-height: 1; }
+.telemetry-metric-value > span:not(.telemetry-not-reported) { color: #7a817d; font-size: .8rem; font-weight: 600; }
+.telemetry-reading-state { color: #788177; font-size: .67rem; }
+.tracker-position-card .card-body { min-height: 250px; }
+.tracker-position-main { display: flex; align-items: center; gap: 1.3rem; }
+.tracker-position-main .tracker-angle-grid { flex: 1 1 auto; margin: .75rem 0; }
+.tracker-solar-art { position: relative; display: grid; width: 190px; min-width: 160px; height: 150px; flex: 0 0 auto; align-content: center; justify-items: center; overflow: visible; }
+.tracker-solar-art::before { position: absolute; z-index: 0; top: -30px; left: 50%; width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle, rgba(255,196,67,.48) 0%, rgba(255,180,49,.2) 38%, rgba(255,173,40,0) 74%); content: ''; filter: blur(3px); opacity: .08; transform: translateX(-50%) scale(.8); }
+.tracker-sun-icon { position: absolute; z-index: 2; top: -26px; left: 50%; width: 42px; height: 42px; color: #f2b632; opacity: .98; filter: drop-shadow(0 3px 6px rgba(232,175,71,.3)); transform: translateX(-50%); transform-origin: center; }
+.tracker-solar-art.offline .tracker-sun-icon { color: #9aa59a; opacity: .56; filter: none; }
+.tracker-panel-mount { position: relative; z-index: 1; display: flex; width: 100%; margin-top: 20px; flex-direction: column; align-items: center; }
+.tracker-solar-art .tracker-panel-mount .solar-panel-illustration { position: relative; z-index: 1; width: 120px; margin: 0; overflow: hidden; border: 3px solid #aeb9c1; border-radius: 7px; background: linear-gradient(145deg, #15283b, #07131e 65%, #1a3042); box-shadow: 0 7px 16px rgba(16,31,45,.24), inset 0 0 0 1px rgba(241,247,251,.2); transform-origin: 50% 90%; }
+.tracker-solar-art .tracker-panel-mount .solar-panel-illustration > div { border: 1px solid rgba(169,195,211,.48); border-radius: 1px; background: linear-gradient(135deg, #183a55, #0a1c2c 58%, #102b40); box-shadow: inset 1px 1px 0 rgba(215,232,243,.1); }
+.tracker-mount-neck { z-index: 0; width: 30px; height: 8px; margin-top: -2px; border: 1px solid #9ba9a0; border-radius: 0 0 8px 8px; background: linear-gradient(90deg, #d5ddd5, #7f8c84 48%, #c8d2c8); box-shadow: 0 3px 5px rgba(47,66,50,.12); }
+.tracker-mount-post { z-index: 0; width: 11px; height: 18px; margin-top: -1px; border-right: 1px solid #78857c; border-left: 1px solid #c5cec6; background: linear-gradient(90deg, #a5b0a7, #edf1ec 45%, #87948b); }
+.tracker-mount-base { width: 62px; height: 7px; margin-top: -1px; border: 1px solid #89958c; border-radius: 50%; background: linear-gradient(180deg, #dfe6dd 0%, #98a49a 100%); box-shadow: 0 4px 7px rgba(45,62,49,.17); }
+.tracker-solar-art.online::before { animation: tracker-sun-halo 2.6s ease-in-out infinite alternate; }
+.tracker-solar-art.online .tracker-sun-icon { animation: tracker-sun-track 4s ease-in-out infinite alternate; }
+.tracker-solar-art.offline::before { opacity: .04; animation: none; }
+.tracker-solar-art.online .solar-panel-illustration { animation: tracker-panel-track 5s ease-in-out infinite alternate; }
+.tracker-solar-art.offline .solar-panel-illustration { animation: none; }
+.tracker-live-badge.online { color: #286e40 !important; background-color: #e8f6df !important; border-color: #d8ebcc; }
+.tracker-live-badge.offline { color: #667269 !important; background-color: #f0f3ee !important; border-color: #e5eae2; }
+.weather-summary-card .card-body { justify-content: flex-start; align-content: center; }
+.weather-data-grid { margin-top: .15rem; }
+.dashboard-metrics-row > [class*="col"] { display: flex; }
+.dashboard-metrics-row > [class*="col"] > .card { width: 100%; }
+.dashboard-metrics-row .ldr-sensor-card .card-body { min-height: 150px; display: flex; flex-direction: column; justify-content: center; }
+.chart-card .chart-body { display: grid; place-items: center; }
+
+// Keep the monitoring icons round and the top controls grouped and compact.
+.reference-dashboard .card-body .rounded-circle {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  padding: 0 !important;
+  place-items: center;
+}
+.autolar-header .header-actions { gap: 0.8rem; }
+.autolar-header .header-device,
+.autolar-header .header-status,
+.autolar-header .header-weather,
+.autolar-header .header-icon-actions { flex-shrink: 0; }
+.autolar-header .header-weather { padding-left: 0.8rem; }
+.autolar-header .header-icon-actions { padding-left: 0.65rem; }
+
+.reference-dashboard .solar-hero-sun { animation: sun-drift 7s ease-in-out infinite; transform-origin: 75% 25%; }
+.reference-dashboard .solar-panel-illustration { animation: panel-float 5s ease-in-out infinite; }
+@keyframes tracker-sun-glow {
+  from { transform: scale(.98); filter: drop-shadow(0 4px 8px rgba(232,175,71,.16)); }
+  to { transform: scale(1.05) rotate(5deg); filter: drop-shadow(0 6px 13px rgba(232,175,71,.34)); }
+}
+@keyframes tracker-sun-track {
+  from { transform: translateX(calc(-50% - 8px)) translateY(2px) rotate(-5deg); filter: drop-shadow(0 4px 8px rgba(232,175,71,.22)); }
+  to { transform: translateX(calc(-50% + 8px)) translateY(-2px) rotate(5deg); filter: drop-shadow(0 7px 13px rgba(232,175,71,.4)); }
+}
+@keyframes tracker-sun-halo {
+  from { opacity: .54; transform: translateX(-50%) scale(.82); }
+  to { opacity: 1; transform: translateX(-50%) scale(1.12); }
+}
+@keyframes tracker-panel-track {
+  from { transform: perspective(450px) rotateX(calc(var(--panel-tilt, 0deg) - 3deg)) rotateZ(calc(var(--panel-pan, 0deg) - 4deg)); }
+  to { transform: perspective(450px) rotateX(calc(var(--panel-tilt, 0deg) + 3deg)) rotateZ(calc(var(--panel-pan, 0deg) + 4deg)); }
+}
+@keyframes sun-drift {
+  0%, 100% { transform: scale(1.5) translate(10%, -10%) rotate(-4deg); }
+  50% { transform: scale(1.5) translate(7%, -13%) rotate(4deg); }
+}
+@keyframes panel-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reference-dashboard .solar-hero-sun,
+  .reference-dashboard .solar-panel-illustration { animation: none; }
+}
+
+@media (max-width: 991.98px) {
+  .app .autolar-header { width: calc(100% - 24px); }
+  .app-content { width: 100%; }
+  .app .sidebar { display: none !important; }
+  .app .app-main { padding: 1.35rem 1rem calc(6.5rem + env(safe-area-inset-bottom)); }
+  .mobile-bottom-nav { position: fixed; z-index: 1035; right: 12px; bottom: max(10px, env(safe-area-inset-bottom)); left: 12px; display: flex; align-items: center; justify-content: space-around; min-height: 66px; padding: .35rem .55rem; border: 1px solid rgba(220,229,216,.95); border-radius: 999px; background: rgba(255,255,255,.96); box-shadow: 0 10px 30px rgba(26,38,26,.15); backdrop-filter: blur(16px); }
+  .autolar-footer { display: none; }
+  .autolar-header .header-icon-actions { display: none; }
+  .autolar-header .header-status { display: flex; }
+  .autolar-header .status-pill { width: auto; min-width: 0; height: auto; padding: .32rem .48rem; gap: .3rem; font-size: .63rem; }
+  .autolar-header .status-dot { width: 6px; height: 6px; }
+  .reference-dashboard .weather-summary-card { height: auto !important; min-height: 0; }
+  .weather-summary-card .card-body { padding: .95rem !important; gap: .65rem; }
+  .weather-summary-icon { width: 38px; height: 38px; border-radius: 12px; }
+  .weather-summary-empty { font-size: .74rem; }
+  .tracker-position-card .card-body { min-height: 180px; padding: 1rem !important; }
+  .tracker-angle-grid { gap: .5rem; margin: 1rem 0 .75rem; }
+  .tracker-angle { padding: .65rem; }
+  .tracker-angle strong { font-size: 1.3rem; }
+  .tracker-position-main { gap: .35rem; }
+  .tracker-solar-art { width: 112px; min-width: 96px; height: 150px; }
+  .tracker-solar-art::before { top: -19px; width: 46px; height: 46px; }
+  .tracker-sun-icon { top: -15px; width: 36px; height: 36px; }
+  .tracker-panel-mount { margin-top: 20px; }
+  .tracker-solar-art .tracker-panel-mount .solar-panel-illustration { width: 94px; gap: 2px; }
+  .tracker-mount-neck { width: 26px; height: 7px; }
+  .tracker-mount-post { height: 16px; width: 10px; }
+  .tracker-mount-base { width: 50px; height: 6px; }
+  .telemetry-metric-body { min-height: 128px; padding: .85rem !important; }
+  .telemetry-metric-icon { width: 33px; height: 33px; border-radius: 10px; }
+  .telemetry-metric-heading { gap: .45rem; }
+  .telemetry-metric-heading > span:last-child { font-size: .63rem !important; }
+  .telemetry-metric-value strong { font-size: 1.35rem; }
+  .dashboard-content > .row:nth-child(2) .card { min-height: 145px; }
+  .dashboard-content > .row:nth-child(3) .card,
+  .dashboard-content > .row:nth-child(4) .card { min-height: 0; }
+  .dashboard-content .card .card-body { padding: .85rem !important; }
+  .table-responsive { max-width: 100%; }
+}
+
+@media (max-width: 767.98px) {
+  .app .app-main { padding: 1rem .75rem calc(6.5rem + env(safe-area-inset-bottom)); }
+  .reference-dashboard .page-heading { margin-bottom: 1.1rem; }
+  .reference-dashboard .page-heading h1 { font-size: 1.6rem; }
+  .reference-dashboard .page-heading p { font-size: .82rem; }
+  .reference-dashboard .solar-hero { min-height: 0; }
+  .solar-hero .card-body { padding: 1rem !important; }
+  .reference-dashboard .solar-hero-sun { display: none; }
+  .reference-dashboard .solar-hero-top { flex-direction: column; gap: .8rem; margin-bottom: 1.2rem !important; }
+  .reference-dashboard .solar-hero-badges { align-items: flex-start !important; flex-direction: row !important; flex-wrap: wrap; }
+  .reference-dashboard .solar-hero-bottom { align-items: center !important; }
+  .reference-dashboard .solar-hero-bottom .text-uppercase { font-size: .67rem; letter-spacing: .08em !important; }
+  .reference-dashboard .solar-hero-bottom .fs-3 { font-size: 1.55rem !important; }
+  .solar-panel-wrap { width: 31%; min-width: 82px; }
+  .chart-card .card-body { height: 220px; min-height: 210px; }
+  .analysis-toolbar { display: grid; width: 100%; gap: .65rem; margin-bottom: 1rem; padding: .75rem; }
+  .analysis-range-field, .analysis-date-range { width: 100%; }
+  .analysis-date-range { display: grid; grid-template-columns: 1fr; gap: .45rem; }
+  .analysis-date-range .input-group-text { justify-content: center; padding: .1rem !important; border: 0 !important; background: transparent !important; font-size: .72rem; }
+  .analytics-page .card-body, .energy-history-page .card-body { padding: .85rem !important; }
+  .analytics-page .card-title { min-height: 2.2em; }
+  .analytics-page .chart-card .card-body, .energy-history-page .chart-card .card-body { height: 230px; min-height: 220px; }
+  .energy-history-page .energy-summary .summary-value { font-size: 1.15rem; }
+  .device-control-grid > div { margin-top: 0 !important; }
+  .device-control-page .card-body { padding: 1rem !important; }
+  .device-control-page .card-body .d-flex.flex-wrap .btn { flex: 1 1 100%; }
+  .notifications-surface { padding: .65rem; border-radius: 18px; }
+  .notifications-page .notification-tabs .nav-link { padding: .55rem .75rem; }
+  .notifications-page .notification-actions { display: grid !important; grid-template-columns: 1fr 1fr; }
+  .notifications-page .notification-actions .btn { width: 100%; white-space: nowrap; }
+  .settings-page .card-body { padding: 1rem !important; }
+  .settings-page > form > .d-flex .btn { width: 100%; }
+  .assistant-page .card-body { padding: 1rem !important; }
+  .assistant-page .card-header { padding: .85rem 1rem !important; }
+  .assistant-page .card-header strong { font-size: .84rem; }
+  .assistant-page .btn { width: 100%; white-space: normal; }
+  .app-main .page-heading { margin-bottom: 1.15rem; padding-bottom: .75rem; }
+  .app-main .page-heading h1 { font-size: 1.58rem; letter-spacing: -.045em; }
+  .app-main .page-heading p { max-width: 38ch; font-size: .82rem; }
+  .app-main .card .card-header h5,
+  .app-main .card .card-header strong { text-underline-offset: .22em; }
+}
+
+@media (max-width: 420px) {
+  .mobile-bottom-nav { right: 8px; left: 8px; min-height: 62px; padding-right: .35rem; padding-left: .35rem; }
+  .mobile-nav-link { font-size: .61rem; }
+  .mobile-nav-link > svg { width: 19px; height: 19px; }
+  .mobile-ai-icon { width: 45px; height: 45px; }
+  .autolar-header .brand-mark { width: 31px; height: 31px; }
+  .autolar-header .brand-copy strong { font-size: .9rem; }
+  .autolar-header .device-select { width: 92px; min-width: 92px; font-size: .68rem; }
+  .autolar-header .device-id-link { max-width: 104px; }
+  .autolar-header .device-id-link > span { display: none; }
+  .autolar-header .device-id-link strong { max-width: 104px; font-size: .64rem; }
+  .autolar-header .header-actions { gap: .25rem; }
+  .autolar-header .status-pill { font-size: .58rem; padding: .3rem .38rem; }
+  .dashboard-content > .row:nth-child(2) .card { min-height: 132px; }
+  .dashboard-content .card .card-body { padding: .7rem !important; }
+  .chart-card .card-body { height: 205px; min-height: 195px; }
+  .analytics-page .row { --bs-gutter-x: .65rem; }
+  .energy-history-page .energy-summary { --bs-gutter-x: .65rem; }
+  .notifications-page .notification-tabs .nav-link { padding: .5rem .58rem; font-size: .78rem; }
+  .assistant-page dl dt, .assistant-page dl dd { font-size: .75rem; }
+}
+
+@media (min-width: 992px) {
+  .app .mobile-menu-bar { display: none !important; }
+  .mobile-bottom-nav { display: none !important; }
+}
+
+// Quiet, shared motion language for route changes and data views.
+.autolar-logo-mark { display: block; width: 100%; height: 100%; overflow: visible; }
+.brand-mark,
+.auth-brand-icon,
+.preview-logo { overflow: visible; }
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .autolar-brand .brand-mark,
+  .marketing-brand .brand-mark,
+  .auth-brand-icon { transition: transform 260ms cubic-bezier(.2, .7, .2, 1); }
+  .autolar-brand:hover .brand-mark,
+  .marketing-brand:hover .brand-mark,
+  .auth-brand:hover .auth-brand-icon { transform: rotate(-5deg) scale(1.05); }
+}
+
+@keyframes autolar-page-arrive {
+  from { opacity: 0; translate: 0 14px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app-main > .dashboard-content,
+  .app-main > .feature-page {
+    animation: autolar-page-arrive 460ms cubic-bezier(.2, .7, .2, 1) both;
+  }
+
+  .reference-dashboard > .page-heading,
+  .reference-dashboard > .dashboard-overview-row,
+  .reference-dashboard > .dashboard-metrics-row,
+  .reference-dashboard > .dashboard-history-row,
+  .feature-page > * {
+    animation: autolar-page-arrive 480ms cubic-bezier(.2, .7, .2, 1) both;
+  }
+
+  .reference-dashboard > .dashboard-overview-row { animation-delay: 55ms; }
+  .reference-dashboard > .dashboard-metrics-row { animation-delay: 115ms; }
+  .reference-dashboard > .dashboard-history-row { animation-delay: 175ms; }
+  .feature-page > :nth-child(2) { animation-delay: 55ms; }
+  .feature-page > :nth-child(3) { animation-delay: 110ms; }
+  .feature-page > :nth-child(4) { animation-delay: 165ms; }
+
+  .app .mobile-bottom-nav { animation: mobile-nav-arrive 420ms cubic-bezier(.2, .7, .2, 1) both; }
+  .marketing .landscape-hero { animation: autolar-page-arrive 540ms cubic-bezier(.2, .7, .2, 1) both; }
+  @keyframes mobile-nav-arrive {
+    from { opacity: 0; translate: 0 16px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+
+  .mobile-nav-link,
+  .header-icon-button { transition: transform 180ms ease, background-color 180ms ease, color 180ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-nav-link:hover,
+    .header-icon-button:hover { transform: translateY(-2px); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tracker-solar-art.online::before,
+  .tracker-solar-art.online .tracker-sun-icon,
+  .tracker-solar-art.online .solar-panel-illustration,
+  .reference-dashboard .solar-hero-sun,
+  .reference-dashboard .solar-panel-illustration,
+  .app .mobile-bottom-nav,
+  .marketing .landscape-hero,
+  .app-main > .dashboard-content,
+  .app-main > .feature-page,
+  .reference-dashboard > *,
+  .feature-page > * {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
+}
