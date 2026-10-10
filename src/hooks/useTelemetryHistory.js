@@ -5,30 +5,39 @@ const useTelemetryHistory = (deviceId, start, end) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const startTime = start ? new Date(start).getTime() : null;
+  const endTime = end ? new Date(end).getTime() : null;
 
   useEffect(() => {
+    let active = true;
     const fetchData = async () => {
-      if (!deviceId || !start || !end) {
+      if (!deviceId || startTime === null || endTime === null) {
         setData([]);
         setError(null);
         setLoading(false);
         return;
       }
       setLoading(true);
+      setError(null);
       try {
-        const response = await deviceApi.getTelemetryHistory(deviceId, start, end);
-        setData(response.data);
-        setError(null);
+        const response = await deviceApi.getTelemetryHistory(deviceId, new Date(startTime), new Date(endTime));
+        if (active) {
+          setData(response.data);
+          setError(null);
+        }
       } catch (err) {
-        setError(err);
-        setData([]);
+        if (active) {
+          setError(err);
+          setData([]);
+        }
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
     fetchData();
-  }, [deviceId, start, end]);
+    return () => { active = false; };
+  }, [deviceId, startTime, endTime]);
 
   return { data, loading, error };
 };

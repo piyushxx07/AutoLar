@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDevice } from '../context/DeviceContext';
 import useTelemetryHistory from '../hooks/useTelemetryHistory';
 import { formatNumber } from '../utils/formatters';
@@ -62,7 +62,7 @@ const Analytics = () => {
     return { start, end };
   };
 
-  const { start, end } = calculateDateRange();
+  const { start, end } = useMemo(calculateDateRange, [range, selectedMonth, startDate, endDate]);
   const { data: historyData, loading, error } = useTelemetryHistory(deviceId, start, end);
 
   // Calculate summary statistics

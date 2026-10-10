@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDevice } from '../context/DeviceContext';
 import useTelemetryHistory from '../hooks/useTelemetryHistory';
 import { formatNumber, formatDate, formatTimeAgo } from '../utils/formatters';
@@ -45,7 +45,7 @@ const EnergyHistory = () => {
     return { start, end };
   };
 
-  const { start, end } = calculateDateRange();
+  const { start, end } = useMemo(calculateDateRange, [range, startDate, endDate]);
   const { data: historyData, loading, error } = useTelemetryHistory(deviceId, start, end);
   const powerValues = historyData.map((item) => item.calculatedPowerW).filter(Number.isFinite);
   const peakPower = powerValues.length ? Math.max(...powerValues) : null;
