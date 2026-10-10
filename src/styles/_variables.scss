@@ -2,22 +2,22 @@
 // Premium Light Solar IoT Theme
 
 // AutoLar Color System
-$autolar-navy: #0f172a;       // Deep navy for primary headings and text
-$autolar-blue: #2563eb;       // Primary blue for active states and primary buttons
-$autolar-sky: #e0f2fe;        // Very light sky blue for soft backgrounds
-$autolar-sky-accent: #38bdf8; // Sky blue for icons and charts
-$autolar-green: #10b981;      // Soft green for online/success/efficiency
-$autolar-solar: #f59e0b;      // Yellow/orange for solar/energy/warnings
-$autolar-purple: #8b5cf6;     // Subtle purple for AI/weather
-$autolar-gray: #64748b;       // Muted gray for secondary text
+$autolar-navy: #203b2b;       // Deep forest green for primary headings and text
+$autolar-blue: #315f40;       // Forest green for primary actions
+$autolar-sky: #edf4e9;        // Pale green for soft surfaces
+$autolar-sky-accent: #75a96b; // Leaf green for icons and charts
+$autolar-green: #4b8b59;      // Green for online/success/efficiency
+$autolar-solar: #d99e35;      // Warm solar gold for energy/warnings
+$autolar-purple: #7d8a62;     // Muted olive for supporting data
+$autolar-gray: #68776b;       // Muted green-gray for secondary text
 $autolar-error: #ef4444;      // Red for errors
-$autolar-border: #e2e8f0;     // Soft borders
+$autolar-border: #e1e8df;     // Soft borders
 
 // Backgrounds
-$autolar-background: #f8fafc; // Off-white/slate base
+$autolar-background: #f6f7f4; // Warm off-white base
 $autolar-card-bg: #ffffff;    // Pure white cards
-$autolar-header-bg: rgba(255, 255, 255, 0.9); // Semi-transparent white for header
-$autolar-sidebar-bg: #ffffff; // White sidebar
+$autolar-header-bg: rgba(255, 255, 255, 0.96); // White header surface
+$autolar-sidebar-bg: #eef2ec; // Soft green sidebar
 
 // Shadows & Depth
 $shadow-soft: 0 4px 20px rgba(15, 23, 42, 0.05);
@@ -31,8 +31,8 @@ $border-radius-lg: 20px;
 $border-radius-xl: 24px;
 
 // Fonts
-$font-family-base: 'Inter', system-ui, sans-serif;
-$font-family-heading: 'Outfit', system-ui, sans-serif;
+$font-family-base: 'DM Sans', system-ui, sans-serif;
+$font-family-heading: 'Manrope', system-ui, sans-serif;
 $font-size-base: 1rem;
 $font-size-sm: 0.875rem;
 $font-size-lg: 1.125rem;

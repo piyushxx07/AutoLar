@@ -655,7 +655,7 @@ a {
 .reference-dashboard .page-heading { margin-bottom: 1.35rem; }
 .reference-dashboard .page-heading h1 { color: #17191c; font-size: clamp(1.65rem, 2.3vw, 2rem); font-weight: 500; letter-spacing: -.045em; }
 .reference-dashboard .page-heading p { color: #777c81; }
-.app-main .card { border: 1px solid #eceef0 !important; border-radius: 23px !important; background: #fff !important; box-shadow: 0 5px 18px rgba(20,24,28,.035) !important; color: #17191c !important; }
+.app-main .card { border: 1px solid #e3e9e1 !important; border-radius: 18px !important; background: #fff !important; box-shadow: 0 7px 22px rgba(35,58,37,.045) !important; color: #203b2b !important; }
 .app-main .card:hover { transform: translateY(-1px); box-shadow: 0 9px 22px rgba(20,24,28,.06) !important; }
 .app-main .card .card-header { color: #17191c !important; border-color: #eff0f1 !important; }
 .app-main .card .card-footer { color: #74797e !important; background: #f5f6f6 !important; }
@@ -700,11 +700,11 @@ a {
 // Refined AutoLar theme: keep existing dashboard/card geometry while updating
 // the type, controls, and floating top navigation.
 :root {
-  --autolar-ink: #151a17;
-  --autolar-muted: #7a817d;
+  --autolar-ink: #203b2b;
+  --autolar-muted: #68776b;
   --autolar-mint: #a4e878;
   --autolar-mint-soft: #edf8e8;
-  --autolar-line: #e9ede9;
+  --autolar-line: #e1e8df;
 }
 
 body {
@@ -806,16 +806,16 @@ h1, h2, h3, h4, h5, h6,
 
 // 60/30/10 workspace palette: neutral canvas, sage surfaces, lime accents.
 :root {
-  --autolar-canvas: #f4f6f2;
-  --autolar-surface: #e7eee3;
-  --autolar-accent: #a4e878;
-  --autolar-ink: #202820;
-  --autolar-muted: #687368;
-  --autolar-line: #dce5d8;
+  --autolar-canvas: #f6f7f4;
+  --autolar-surface: #edf2eb;
+  --autolar-accent: #a8ed78;
+  --autolar-ink: #203b2b;
+  --autolar-muted: #68776b;
+  --autolar-line: #e1e8df;
 }
 
 html, body, #root { min-height: 100%; }
-body { background: var(--autolar-canvas); }
+body { background: var(--autolar-canvas); font-family: 'DM Sans', system-ui, sans-serif; }
 #root { width: 100%; max-width: none; text-align: left; border: 0; }
 .app { min-height: 100vh; background: var(--autolar-canvas); }
 .app-content { width: min(100%, 1680px); margin: 0 auto; }
@@ -850,11 +850,11 @@ body { background: var(--autolar-canvas); }
 .app .sidebar .nav-link svg { color: currentColor; }
 .app .sidebar .nav-link:hover { color: var(--autolar-ink) !important; background: rgba(255,255,255,.65); }
 .app .sidebar .nav-link.active-sidebar-item {
-  color: var(--autolar-ink) !important;
-  background: var(--autolar-accent);
+  color: #fff !important;
+  background: #315f40;
   font-weight: 700;
 }
-.app .sidebar .nav-link.active-sidebar-item svg { color: var(--autolar-ink); }
+.app .sidebar .nav-link.active-sidebar-item svg { color: var(--autolar-accent); }
 .app .app-main { min-width: 0; padding: 2rem clamp(1.25rem, 2.5vw, 2.5rem); background: var(--autolar-canvas); }
 .app-main .card { background: #fff !important; }
 .app-main .btn-primary { color: var(--autolar-ink) !important; background: var(--autolar-accent) !important; border-color: #98d96b !important; }
