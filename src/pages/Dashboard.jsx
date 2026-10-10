@@ -40,7 +40,7 @@ const Dashboard = () => {
         {latestTelemetry?.netPowerW != null && <Col xs={6} sm={6} lg><TelemetryMetricCard title="Net power" value={Number(latestTelemetry.netPowerW).toFixed(2)} unit="W" isOnline={isOnline} icon={Activity} /></Col>}
         <Col xs={6} sm={6} lg><TelemetryMetricCard title="Panel voltage" value={latestTelemetry?.panelVoltage?.toFixed?.(2)} unit="V" isOnline={isOnline} icon={Gauge} /></Col>
         <Col xs={6} sm={6} lg><TelemetryMetricCard title="Panel current" value={latestTelemetry?.panelCurrentMa != null ? (latestTelemetry.panelCurrentMa / 1000).toFixed(3) : null} unit="A" isOnline={isOnline} icon={Activity} /></Col>
-        <Col xs={6} sm={6} lg><LdrSensorCard latestTelemetry={latestTelemetry} isOnline={isOnline} /></Col>
+        <Col xs={12} sm={6} lg><LdrSensorCard latestTelemetry={latestTelemetry} isOnline={isOnline} /></Col>
       </Row>
 
       <Row className="mb-4 dashboard-history-row"><Col><PowerChart historyData={historyData} loading={historyLoading} error={historyError} /></Col></Row>
