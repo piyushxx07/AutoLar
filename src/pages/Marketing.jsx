@@ -33,6 +33,7 @@ export default function Marketing() {
           </div>
 
           <article className="hero-project-card">
+            <div className="project-image-wrap"><img src={solarFarmImage} alt="Solar panels arranged to capture sunlight" /></div>
             <div className="project-card-copy"><span className="project-kicker"><Cpu size={13} /> AUTOLAR TRACKER</span><h2>Smarter solar, following the light.</h2><p>Light sensors guide the panel throughout the day.</p><a href="#services">Explore the system <ArrowRight size={13} /></a></div>
           </article>
           <div className="hero-bottom-line"><span /> SOLAR THAT MOVES WITH THE SUN</div>
