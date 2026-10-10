@@ -23,7 +23,9 @@ const PowerChart = ({ historyData, loading, error, title = 'Power generation' })
                 <LineChart data={chartData} margin={{ top: 8, right: 8, left: -14, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="4 5" vertical={false} />
                   <XAxis dataKey="name" minTickGap={28} tickLine={false} axisLine={false} tickFormatter={(date) =>
-                    date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    (chartData.length > 1 && chartData.at(-1).name - chartData[0].name >= 86400000)
+                      ? date.toLocaleDateString([], { month: 'short', day: 'numeric' })
+                      : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                   } />
                   <YAxis tickLine={false} axisLine={false} width={42} />
                   <Tooltip />

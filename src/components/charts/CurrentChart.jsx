@@ -43,7 +43,7 @@ const CurrentChart = ({ historyData, loading, error, title = 'Panel current' }) 
   }));
 
   return (
-    <Card className="h-100">
+    <Card className="chart-card h-100">
       <Card.Header>
         <h5 className="card-title">{title}</h5>
       </Card.Header>
@@ -51,8 +51,10 @@ const CurrentChart = ({ historyData, loading, error, title = 'Panel current' }) 
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 8, right: 8, left: -14, bottom: 0 }}>
             <CartesianGrid strokeDasharray="4 5" vertical={false} />
-            <XAxis dataKey="name" minTickGap={28} tickLine={false} axisLine={false} tickFormatter={(date) => {
-              return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            <XAxis dataKey="name" minTickGap={32} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} tickFormatter={(date) => {
+              return chartData.length > 1 && chartData.at(-1).name - chartData[0].name >= 86400000
+                ? date.toLocaleDateString([], { month: 'short', day: 'numeric' })
+                : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             }} />
             <YAxis tickLine={false} axisLine={false} width={42} />
             <Tooltip />
