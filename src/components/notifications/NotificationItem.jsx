@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { Activity, AlertTriangle, BellRing, Clock3, Lightbulb } from 'lucide-react';
 
 const NotificationItem = ({ notification, onMarkRead }) => {
   const { id, type, message, timestamp, read } = notification;
@@ -12,25 +13,24 @@ const NotificationItem = ({ notification, onMarkRead }) => {
       default: return 'notification-ai';
     }
   };
+  const TypeIcon = type === 'alert' ? AlertTriangle : type === 'info' ? Lightbulb : type === 'system' ? Activity : BellRing;
+  const displayTime = new Date(timestamp);
 
   return (
     <Card className={`notification-card mb-2 ${getBorderClass(type)}`}>
-      <Card.Body className="d-flex justify-content-between align-items-center gap-3">
-        <div>
-          <h6 className="card-title">
-            {type.charAt(0).toUpperCase() + type.slice(1)}
-            {!read && <span className="badge bg-danger ms-2">NEW</span>}
-          </h6>
-          <p className="card-text mb-1">{message}</p>
-          <small className="text-muted">{new Date(timestamp).toLocaleString()}</small>
+      <Card.Body className="notification-card-body">
+        <div className="notification-card-content">
+          <div className="notification-card-heading">
+            <span className="notification-type-icon"><TypeIcon size={17} strokeWidth={2} /></span>
+            <div className="notification-title-wrap">
+              <h6 className="card-title">{type.charAt(0).toUpperCase() + type.slice(1)}</h6>
+              {!read && <span className="notification-new-badge">New</span>}
+            </div>
+          </div>
+          <p className="card-text">{message}</p>
+          <small className="notification-timestamp"><Clock3 size={13} />{Number.isNaN(displayTime.getTime()) ? 'Time unavailable' : displayTime.toLocaleString()}</small>
         </div>
-        <div>
-          {!read && (
-            <button type="button" className="btn btn-sm btn-outline-primary" onClick={() => onMarkRead(id)}>
-              Mark as Read
-            </button>
-          )}
-        </div>
+        {!read && <button type="button" className="btn btn-sm btn-outline-primary notification-mark-read" onClick={() => onMarkRead(id)}>Mark as read</button>}
       </Card.Body>
     </Card>
   );
