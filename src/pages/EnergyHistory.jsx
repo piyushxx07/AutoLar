@@ -2,50 +2,22 @@ import React, { useMemo, useState } from 'react';
 import { useDevice } from '../context/DeviceContext';
 import useTelemetryHistory from '../hooks/useTelemetryHistory';
 import { formatNumber, formatDate, formatTimeAgo } from '../utils/formatters';
-import { Col, Row, Card, Table, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Col, Row, Card, Table, FormControl, Form } from "react-bootstrap";
 import PowerChart from '../components/charts/PowerChart';
 import SectionHeader from '../components/common/SectionHeader';
+import { getTelemetryDateRange } from '../utils/telemetryDateRange';
 
 const EnergyHistory = () => {
   const { deviceId } = useDevice();
   const [range, setRange] = useState('today');
+  const [selectedMonth, setSelectedMonth] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const calculateDateRange = () => {
-    let end = new Date();
-    let start;
-    switch (range) {
-      case 'today':
-        start = new Date();
-        start.setHours(0, 0, 0, 0);
-        break;
-      case 'week':
-        start = new Date();
-        start.setDate(start.getDate() - 7);
-        break;
-      case 'month':
-        start = new Date();
-        start.setMonth(start.getMonth() - 1);
-        break;
-      case 'custom':
-        if (startDate && endDate) {
-          start = new Date(startDate);
-          end = new Date(endDate);
-          end.setHours(23, 59, 59, 999);
-        } else {
-          return { start: null, end: null };
-        }
-        break;
-      default:
-        start = new Date();
-        start.setHours(0, 0, 0, 0);
-        end = new Date();
-    }
-    return { start, end };
-  };
-
-  const { start, end } = useMemo(calculateDateRange, [range, startDate, endDate]);
+  const { start, end } = useMemo(
+    () => getTelemetryDateRange(range, { selectedMonth, startDate, endDate }),
+    [range, selectedMonth, startDate, endDate],
+  );
   const { data: historyData, loading, error } = useTelemetryHistory(deviceId, start, end);
   const powerValues = historyData.map((item) => item.calculatedPowerW).filter(Number.isFinite);
   const peakPower = powerValues.length ? Math.max(...powerValues) : null;
@@ -57,6 +29,7 @@ const EnergyHistory = () => {
       setStartDate(null);
       setEndDate(null);
     }
+    if (e.target.value === 'month') setSelectedMonth('');
   };
 
   return (
@@ -68,26 +41,39 @@ const EnergyHistory = () => {
           <Form.Select value={range} onChange={handleRangeChange}>
           <option value="today">Today</option>
           <option value="week">7 Days</option>
-          <option value="month">30 Days</option>
+          <option value="days30">Last 30 Days</option>
+          <option value="lastMonth">Last Month</option>
+          <option value="month">Select Month</option>
           <option value="custom">Custom</option>
           </Form.Select>
         </Form.Group>
+        {range === 'month' && (
+          <Form.Group controlId="history-month" className="analysis-month-field">
+            <Form.Label>Select month</Form.Label>
+            <Form.Control type="month" value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} />
+          </Form.Group>
+        )}
         {range === 'custom' && (
-            <InputGroup className="analysis-date-range">
+            <div className="analysis-date-range">
+              <Form.Group className="analysis-date-field">
+                <Form.Label>From</Form.Label>
               <FormControl
                 aria-label="Start date"
                 type="date"
                 value={startDate || ''}
                 onChange={(e) => setStartDate(e.target.value)}
               />
-              <span className="input-group-text">to</span>
+              </Form.Group>
+              <Form.Group className="analysis-date-field">
+                <Form.Label>To</Form.Label>
               <FormControl
                 aria-label="End date"
                 type="date"
                 value={endDate || ''}
                 onChange={(e) => setEndDate(e.target.value)}
               />
-            </InputGroup>
+              </Form.Group>
+            </div>
         )}
       </div>
 
@@ -103,7 +89,7 @@ const EnergyHistory = () => {
         </div>
       ) : !historyData || historyData.length === 0 ? (
         <div className="feature-empty-state">
-          <strong>No readings in this time range</strong><p>Choose another range or check whether the tracker has sent telemetry.</p>
+          <strong>{range === 'custom' && (!startDate || !endDate) ? 'Choose a date range' : range === 'month' && !selectedMonth ? 'Select a month' : 'No readings in this time range'}</strong><p>{range === 'custom' && (!startDate || !endDate) ? 'Select both the From and To dates to view energy history.' : startDate && endDate && startDate > endDate ? 'The From date must be on or before the To date.' : 'Choose another range or check whether the tracker has sent telemetry.'}</p>
         </div>
       ) : (
         <>
@@ -115,6 +101,11 @@ const EnergyHistory = () => {
               <Card><Card.Body><span className="summary-label">Peak power</span><strong className="summary-value">{formatNumber(peakPower)} <small>W</small></strong></Card.Body></Card>
             </Col>
           </Row>
+          <div className="mb-4 energy-trend-section">
+            <h5>Energy Trend</h5>
+            <PowerChart historyData={historyData} loading={false} error={null} title="Power readings over time" />
+          </div>
+
           <div className="mb-4">
             <h5>Readings</h5>
             <div className="table-responsive">
@@ -129,7 +120,7 @@ const EnergyHistory = () => {
                 </tr>
               </thead>
               <tbody>
-                {historyData.map((item, index) => (
+                {[...historyData].reverse().map((item, index) => (
                     <tr key={item.id ?? `${item.recordedAt}-${index}`}>
                       <td>{formatDate(item.recordedAt)} {formatTimeAgo(item.recordedAt)}</td>
                       <td>{formatNumber(item.calculatedPowerW)}</td>
@@ -143,10 +134,6 @@ const EnergyHistory = () => {
             </div>
           </div>
 
-          <div className="mt-4">
-            <h5>Energy Trend</h5>
-            <PowerChart historyData={historyData} loading={false} error={null} title="Power readings over time" />
-          </div>
         </>
       )}
     </div>

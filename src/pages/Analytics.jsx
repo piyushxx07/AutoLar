@@ -7,6 +7,7 @@ import PowerChart from '../components/charts/PowerChart';
 import VoltageChart from '../components/charts/VoltageChart';
 import CurrentChart from '../components/charts/CurrentChart';
 import SectionHeader from '../components/common/SectionHeader';
+import { getTelemetryDateRange } from '../utils/telemetryDateRange';
 
 const rangeLabel = (range) => ({ today: 'Today', week: '7 days', days30: 'Last 30 days', lastMonth: 'Last month', month: 'Selected month', custom: 'Custom' }[range] || range);
 
@@ -17,52 +18,10 @@ const Analytics = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  // Calculate start and end dates based on range
-  const calculateDateRange = () => {
-    let end = new Date();
-    let start;
-    switch (range) {
-      case 'today':
-        start = new Date();
-        start.setHours(0, 0, 0, 0);
-        break;
-      case 'week':
-        start = new Date();
-        start.setDate(start.getDate() - 7);
-        break;
-      case 'month':
-        if (!selectedMonth) return { start: null, end: null };
-        const [year, month] = selectedMonth.split('-').map(Number);
-        start = new Date(year, month - 1, 1);
-        end = new Date(start.getFullYear(), start.getMonth() + 1, 0, 23, 59, 59, 999);
-        break;
-      case 'days30':
-        start = new Date();
-        start.setDate(start.getDate() - 30);
-        break;
-      case 'lastMonth':
-        start = new Date();
-        start.setDate(1);
-        start.setHours(0, 0, 0, 0);
-        start.setMonth(start.getMonth() - 1);
-        end = new Date(start.getFullYear(), start.getMonth() + 1, 0, 23, 59, 59, 999);
-        break;
-      case 'custom':
-        if (startDate && endDate && startDate <= endDate) {
-          start = new Date(startDate);
-          end = new Date(endDate);
-          end.setHours(23, 59, 59, 999);
-        } else return { start: null, end: null };
-        break;
-      default:
-        start = new Date();
-        start.setHours(0, 0, 0, 0);
-        end = new Date();
-    }
-    return { start, end };
-  };
-
-  const { start, end } = useMemo(calculateDateRange, [range, selectedMonth, startDate, endDate]);
+  const { start, end } = useMemo(
+    () => getTelemetryDateRange(range, { selectedMonth, startDate, endDate }),
+    [range, selectedMonth, startDate, endDate],
+  );
   const { data: historyData, loading, error } = useTelemetryHistory(deviceId, start, end);
 
   // Calculate summary statistics

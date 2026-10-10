@@ -22,7 +22,15 @@ const useTelemetryHistory = (deviceId, start, end) => {
       try {
         const response = await deviceApi.getTelemetryHistory(deviceId, new Date(startTime), new Date(endTime));
         if (active) {
-          setData(response.data);
+          // Keep the UI honest if an API/cache returns rows outside the
+          // requested window. Charts and tables must only show this range.
+          const rows = Array.isArray(response.data) ? response.data : [];
+          const inRange = rows.filter((item) => {
+            const timestamp = Date.parse(item.recordedAt);
+            return Number.isFinite(timestamp) && timestamp >= startTime && timestamp <= endTime;
+          });
+          inRange.sort((a, b) => Date.parse(a.recordedAt) - Date.parse(b.recordedAt));
+          setData(inRange);
           setError(null);
         }
       } catch (err) {
